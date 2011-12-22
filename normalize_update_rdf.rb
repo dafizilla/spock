@@ -19,7 +19,6 @@
 # Author: Massimiliano Mirra, <bard [at] hyperstruct [dot] net>
 
 
-require 'xml/libxslt'
 require 'strscan'
 
 INDENT = '  '
@@ -51,10 +50,11 @@ end
 # Convert RDF into n-triples form, for easier parsing
 
 def rdf2nt(filename)
-  xslt = XML::XSLT.new
-  xslt.xml = filename
-  xslt.xsl = File.dirname(__FILE__) + '/rdf2nt.xsl'
-  xslt.serve
+  cmd = 'xml tr ' + '/opt/devel/mozilla/spock/rdf2nt.xsl' + ' ' + filename
+  
+  IO.popen("#{cmd}") do |f|
+    result = f.read
+  end
 end
 
 def parse_nt(ntriples_dump)
@@ -62,11 +62,11 @@ def parse_nt(ntriples_dump)
 
   ntriples_dump.split("\n").each do |line|
     s = StringScanner.new(line)
-    subj = s.scan(/_:id\d+|<[^>]+>/).gsub(/^<|>$/, '')
+    subj = s.scan(/_:id[a-z]*\d+|<[^>]+>/).gsub(/^<|>$/, '')
     s.skip(/\s+/)
     pred = s.scan(/<[^>]+>/).gsub(/^<|>$/, '')
     s.skip(/\s+/)
-    obj = s.scan(/_:id\d+|"[^"]*"|<[^>]+>/).gsub(/^<|>$/, '').gsub(/^"|"$/, '')
+    obj = s.scan(/_:id[a-z]*\d+|"[^"]*"|<[^>]+>/).gsub(/^<|>$/, '').gsub(/^"|"$/, '')
 
     triples[subj] ||= []
     triples[subj] << [subj, pred, obj]

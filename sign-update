@@ -1,0 +1,2 @@
+#echo `dirname $0`/spock "$1" -d "$2" -i "urn:mozilla:extension:$3" -v $4 $5
+`dirname $0`/spock "$1" -d "$2" -i "urn:mozilla:extension:$3" -v $4 -f $6 >$5

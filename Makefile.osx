@@ -1,0 +1,18 @@
+CFLAGS=-Inss -I/Users/dave/trash/mozilla-nss/mozilla/dist/public/nss -I/Users/dave/trash/mozilla-nss/mozilla/dist/Darwin10.8.0_64_OPT.OBJ/include/
+LDLIBS=-L/Users/dave/trash/mozilla-nss/mozilla/dist/Darwin10.8.0_64_OPT.OBJ/lib/ -lsmime3 -lssl3
+LDLIBS=-L/Users/dave/trash/mozilla-nss/mozilla/dist/Darwin10.8.0_64_OPT.OBJ/lib/ -lnspr4 -lplds4 -lplc4 -lnss3 -lsoftokn3 -lsmime3 -lssl3
+OBJS=nss/secpwd.o nss/secutil.o nss/secerror.o nss/pppolicy.o nss/moreoids.o nss_sign_data.o
+
+all: nss_sign_data
+
+%.o: %.c
+	$(CC) -c $(CFLAGS)  -arch x86_64 -o $(@) $(^)
+
+nss_sign_data: $(OBJS)
+	$(CC) -o $(@) $(OBJS) $(LDLIBS)
+
+clean:
+	rm -f *.o nss/*.o
+
+
+.PHONY: all clean
