@@ -50,7 +50,7 @@ end
 # Convert RDF into n-triples form, for easier parsing
 
 def rdf2nt(filename)
-  cmd = 'xml tr ' + '/opt/devel/mozilla/spock/rdf2nt.xsl' + ' ' + filename
+  cmd = 'xml tr ' + "#{File.dirname(__FILE__)}/rdf2nt.xsl" + ' ' + filename
   
   IO.popen("#{cmd}") do |f|
     result = f.read

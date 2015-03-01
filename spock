@@ -20,16 +20,26 @@ OptionParser.new do |opts|
   opts.on('-i', '--extension-id ID',
     'ID of the extension resource, including version if any', 'Examples:',
     'urn:mozilla:extension:foo@bar.org:0.1',
-    'urn:mozilla:extension:{eecba28f-b68b-4b3a-b501-6ce12e6b8696}') { |options.ext_id| }
+    'urn:mozilla:extension:{eecba28f-b68b-4b3a-b501-6ce12e6b8696}') do |ext_id|
+      options.ext_id = ext_id
+    end
   opts.on('-v', '--version VERSION',
-    'Set <version/> value in resulting update.rdf') { |options.version| }
+    'Set <version/> value in resulting update.rdf') do |version|
+      options.version = version;
+    end
   opts.on('-u', '--update-link URL',
-    'Set <updateLink/> value in resulting update.rdf') { |options.update_link| }
+    'Set <updateLink/> value in resulting update.rdf') do |update_link|
+      options.update_link = update_link
+    end
   opts.on('-f', '--file PACKAGE_FILENAME',
-    'Determine <updateHash/> value using PACKAGE_FILENAME') { |options.package_filename| }
+    'Determine <updateHash/> value using PACKAGE_FILENAME') do |package_filename|
+    options.package_filename = package_filename;
+  end
   opts.on('-d', '--nss-directory DIR',
     'Directory containing key key3.db',
-    'Example: ~/.mozilla/mccoy/rt7xxbxw.default/') { |options.nss_dir| }
+    'Example: ~/.mozilla/mccoy/rt7xxbxw.default/') do |nss_dir|
+    options.nss_dir = nss_dir;
+  end
 
   opts.separator ''
 
